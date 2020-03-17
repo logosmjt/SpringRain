@@ -1,0 +1,17 @@
+[
+  {
+    "operationId": "1",
+    "type": 2,
+    "imageUrls": "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg"
+  },
+  {
+    "operationId": "2",
+    "type": 2,
+    "imageUrls": "https://upload.wikimedia.org/wikipedia/commons/2/29/Beetroot_jm26647.jpg"
+  },
+  {
+    "operationId": "3",
+    "type": 2,
+    "imageUrls": "https://upload.wikimedia.org/wikipedia/commons/5/51/A_scene_of_Coriander_leaves.JPG"
+  }
+]

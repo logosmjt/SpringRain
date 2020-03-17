@@ -1,0 +1,2 @@
+rootProject.name='SpringRain'
+include ':app'

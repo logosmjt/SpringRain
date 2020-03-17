@@ -34,9 +34,9 @@ class OperationAdapter(private val viewModel: HomeViewModel)
         : RecyclerView.ViewHolder(binding.root){
         init {
             binding.setClickListener {
-                binding.banner?.let { banner ->
-                    TODO("not implemented")
-                }
+//                binding.banner?.let { banner ->
+//                    TODO("not implemented")
+//                }
             }
         }
         fun bind(item: Operation) {

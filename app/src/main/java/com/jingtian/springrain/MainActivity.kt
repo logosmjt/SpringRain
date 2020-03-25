@@ -3,24 +3,56 @@ package com.jingtian.springrain
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.jingtian.springrain.helper.BottomNavigationViewHelper
+import com.jingtian.springrain.ui.dashboard.DashboardFragment
+import com.jingtian.springrain.ui.home.HomeFragment
+import com.jingtian.springrain.ui.notifications.NotificationsFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        val viewPager2: ViewPager2 = findViewById(R.id.viewPager2)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+
+        viewPager2.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int {
+                return 3
+            }
+
+            override fun createFragment(position: Int): Fragment {
+                return when (position) {
+                    0 -> HomeFragment()
+                    1 -> DashboardFragment()
+                    else -> NotificationsFragment()
+                }
+            }
+        }
+
+        navView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_home ->
+                    viewPager2.setCurrentItem(0, true)
+                R.id.navigation_dashboard ->
+                    viewPager2.setCurrentItem(1, true)
+
+                R.id.navigation_notifications ->
+                    viewPager2.setCurrentItem(2, true)
+
+            }
+            true
+        }
+
 
         val iconImageList = BottomNavigationViewHelper.getIconImageView(navView)
         for (i in iconImageList.indices) {

@@ -62,6 +62,7 @@ ext {
     uiAutomatorVersion = '2.2.0'
     viewPagerVersion = '1.0.0'
     workVersion = '2.1.0'
+    viewpager2Version = '1.0.0'
 }
 
 task clean(type: Delete) {

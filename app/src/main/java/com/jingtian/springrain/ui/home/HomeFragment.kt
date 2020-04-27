@@ -1,6 +1,11 @@
 package com.jingtian.springrain.ui.home
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +13,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.jingtian.springrain.IMyAidlInterface
 import com.jingtian.springrain.R
-import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.databinding.FragmentHomeBinding
 import com.jingtian.springrain.helper.provideHomeViewModelFactory
 import com.jingtian.springrain.helper.setupRefreshLayout
@@ -20,7 +25,6 @@ class HomeFragment : Fragment() {
     }
     private lateinit var viewDataBinding: FragmentHomeBinding
     private lateinit var listAdapter: OperationAdapter
-    var operationId = 4
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -33,12 +37,31 @@ class HomeFragment : Fragment() {
         return viewDataBinding.root
     }
 
+    private var mIntent: Intent? = null
+    private var myAidlInterface: IMyAidlInterface? = null
+
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceDisconnected(p0: ComponentName?) {
+
+        }
+
+        override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+            myAidlInterface = IMyAidlInterface.Stub.asInterface(iBinder)
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupListAdapter()
         setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.operations)
         setupFab()
+
+
+        mIntent = Intent()
+        mIntent?.component = ComponentName("com.jingtian.springrain", "com.jingtian.springrain.MyService")
+        activity?.bindService(mIntent, connection, Context.BIND_AUTO_CREATE)
     }
 
     private fun setupListAdapter() {
@@ -52,10 +75,14 @@ class HomeFragment : Fragment() {
     private fun setupFab() {
         activity?.findViewById<FloatingActionButton>(R.id.add_task_fab)?.let {
             it.setOnClickListener {
-                viewModel.insert(Operation(operationId.toString(), 2,
-                    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584448673299&di=3352fde1360d7e722f81bbfdc3d90b4a&imgtype=0&src=http%3A%2F%2Fimg1001.pocoimg.cn%2Fimage%2Fpoco%2Fworks%2F65%2F2013%2F0416%2F09%2F5331815520130416175036096_53318155.jpg"))
-                operationId++
+                Log.i("JT","myAidlInterface name:"+myAidlInterface?.name)
+
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.unbindService(connection)
     }
 }

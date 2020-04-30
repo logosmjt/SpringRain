@@ -1,6 +1,5 @@
 package com.jingtian.springrain.ui.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.data.source.OperationRepository

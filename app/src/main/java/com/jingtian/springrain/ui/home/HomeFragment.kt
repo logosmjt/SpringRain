@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.jingtian.springrain.databinding.FragmentHomeBinding
 import com.jingtian.springrain.helper.provideHomeViewModelFactory
 import com.jingtian.springrain.helper.setupRefreshLayout
 
+
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels {
         provideHomeViewModelFactory(this)
@@ -27,9 +27,9 @@ class HomeFragment : Fragment() {
     private lateinit var listAdapter: OperationAdapter
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             viewmodel = viewModel
@@ -60,7 +60,8 @@ class HomeFragment : Fragment() {
 
 
         mIntent = Intent()
-        mIntent?.component = ComponentName("com.jingtian.springrain", "com.jingtian.springrain.MyService")
+        mIntent?.component =
+            ComponentName("com.jingtian.springrain", "com.jingtian.springrain.MyService")
         activity?.bindService(mIntent, connection, Context.BIND_AUTO_CREATE)
     }
 
@@ -75,7 +76,6 @@ class HomeFragment : Fragment() {
     private fun setupFab() {
         activity?.findViewById<FloatingActionButton>(R.id.add_task_fab)?.let {
             it.setOnClickListener {
-                Log.i("JT","myAidlInterface name:"+myAidlInterface?.name)
 
             }
         }

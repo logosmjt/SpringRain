@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.GreenTheme)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
         val viewPager2: ViewPager2 = findViewById(R.id.viewPager2)
@@ -56,5 +57,6 @@ class MainActivity : AppCompatActivity() {
                 .load("https://upload.jianshu.io/users/upload_avatars/10599465/12257565-f94f-4fda-9dd3-a730722fb6e3?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
                 .into(iconImageList[i])
         }
+
     }
 }

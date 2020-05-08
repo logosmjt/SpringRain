@@ -6,10 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/jingtian.mo/Documents/Github/SpringRain/mykey.jks')
-            storePassword '123456'
-            keyAlias = 'mykeystore'
-            keyPassword '000000'
+
         }
     }
     compileSdkVersion rootProject.compileSdkVersion

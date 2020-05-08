@@ -22,7 +22,7 @@ class MyService : Service() {
         }
 
         override fun getName(): String {
-            return "SpringRain AIDL Service"
+            return getString(R.string.aidl_service_name)
         }
 
     }

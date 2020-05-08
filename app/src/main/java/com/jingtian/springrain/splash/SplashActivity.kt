@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil.setContentView
@@ -19,6 +18,7 @@ import com.jingtian.springrain.MainActivity
 import com.jingtian.springrain.R
 import com.jingtian.springrain.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.activity_splash.*
+import org.jetbrains.annotations.NotNull
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var mIntent: Intent
@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
-            myAidlInterface = IMyAidlInterface.Stub.asInterface(iBinder)
+            iBinder?.let { myAidlInterface = IMyAidlInterface.Stub.asInterface(iBinder) }
         }
     }
 
@@ -49,13 +49,17 @@ class SplashActivity : AppCompatActivity() {
         mManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         aidlBtn.setOnClickListener{
-            Toast.makeText(this, "myAidlInterface name:" + myAidlInterface.name,
-                Toast.LENGTH_SHORT).show()
+            tv_aidl.text = myAidlInterface.name
         }
 
         notificationBtn.setOnClickListener{
             val NOTIFICATION_ID = 234
             mManager.notify(NOTIFICATION_ID, buildNotification())
+        }
+
+        nextBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

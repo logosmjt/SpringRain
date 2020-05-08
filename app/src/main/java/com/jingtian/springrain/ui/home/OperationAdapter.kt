@@ -1,5 +1,6 @@
 package com.jingtian.springrain.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -30,13 +31,15 @@ class OperationAdapter(private val viewModel: HomeViewModel)
         }
     }
 
+
+
     class BannerViewHolder(private val binding: ListItemBannerBinding)
         : RecyclerView.ViewHolder(binding.root){
         init {
             binding.setClickListener {
-//                binding.banner?.let { banner ->
-//                    TODO("not implemented")
-//                }
+                binding.banner?.let { banner ->
+                    Log.i("OperationAdapter", "banner url :${banner.imageUrls}")
+                }
             }
         }
         fun bind(item: Operation) {

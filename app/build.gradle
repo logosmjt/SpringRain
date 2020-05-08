@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/jingtian.mo/Documents/Github/SpringRain/mykey.jks')
+            storePassword '123456'
+            keyAlias = 'mykeystore'
+            keyPassword '000000'
+        }
+    }
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
@@ -19,12 +27,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -38,6 +48,23 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    flavorDimensions 'channel'
+    productFlavors {
+        yinyongbao {
+            dimension = 'channel'
+            manifestPlaceholders = [Channel: 'yingyongbao']
+            buildConfigField "String","Hello","\"yingyongbao\""
+        }
+        play {
+            dimension = 'channel'
+            manifestPlaceholders = [Channel: 'play']
+        }
     }
 
 }
@@ -76,6 +103,22 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "com.google.truth:truth:$truthVersion"
+    testImplementation "androidx.test:rules:$androidXTestRulesVersion"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
+
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "androidx.test.ext:junit:$testExtJunit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiAutomatorVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 }

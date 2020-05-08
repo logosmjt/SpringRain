@@ -1,5 +1,6 @@
 package com.jingtian.springrain
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -19,6 +20,8 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val appName = appContext.resources.getString(R.string.app_name)
+        Log.i("Test","appName: $appName");
         assertEquals("com.jingtian.springrain", appContext.packageName)
     }
 }

@@ -1,13 +1,12 @@
 package com.jingtian.springrain
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.BuildConfig
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jingtian.springrain.helper.BottomNavigationViewHelper
 import com.jingtian.springrain.ui.dashboard.DashboardFragment
 import com.jingtian.springrain.ui.home.HomeFragment
@@ -21,8 +20,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar
             ?.hide()
-        val viewPager2:      ViewPager2 = findViewById(R.id.viewPager2)
-        val navView     : BottomNavigationView = findViewById(R.id.nav_view)
+
+        val viewPager2: ViewPager2 = findViewById(R.id.viewPager2)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         viewPager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
@@ -47,11 +47,9 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_notifications ->
                     viewPager2.setCurrentItem(2, true)
-
             }
             true
         }
-
 
         val iconImageList = BottomNavigationViewHelper.getIconImageView(navView)
         for (i in iconImageList.indices) {
@@ -59,6 +57,5 @@ class MainActivity : AppCompatActivity() {
                 .load("https://upload.jianshu.io/users/upload_avatars/10599465/12257565-f94f-4fda-9dd3-a730722fb6e3?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240")
                 .into(iconImageList[i])
         }
-
     }
 }

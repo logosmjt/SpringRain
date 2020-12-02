@@ -13,7 +13,6 @@ import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.helper.DATABASE_NAME
 import com.jingtian.springrain.worker.OperationDatabaseWorker
 
-
 @Database(entities = [Operation::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun operationDao(): OperationDao
@@ -56,5 +55,4 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-
 }

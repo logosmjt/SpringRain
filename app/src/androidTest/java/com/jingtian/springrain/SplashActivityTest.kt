@@ -37,9 +37,11 @@ class SplashActivityTest {
     @Test
     fun testNextBtn_click_ShouldStartMainActivity() {
         onView(withId(R.id.nextBtn)).perform(click())
-        intended(allOf(
-            hasComponent(hasShortClassName(".MainActivity")),
-            toPackage("com.jingtian.springrain")))
+        intended(
+            allOf(
+                hasComponent(hasShortClassName(".MainActivity")),
+                toPackage("com.jingtian.springrain")
+            )
+        )
     }
-
 }

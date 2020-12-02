@@ -1,10 +1,10 @@
 package com.jingtian.springrain.data.source.local
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.data.Result
-import com.jingtian.springrain.data.Result.*
+import com.jingtian.springrain.data.Result.Error
+import com.jingtian.springrain.data.Result.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

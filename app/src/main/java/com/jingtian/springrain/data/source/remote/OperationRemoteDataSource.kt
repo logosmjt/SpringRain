@@ -23,7 +23,7 @@ class OperationRemoteDataSource internal constructor(
         } catch (e: Exception) {
             return@withContext Result.Error(IOException("Error getting stories", e))
         }
-        //todo mock
+        // todo mock
         context.assets.open(OPERATION_DATA_FILENAME).use { inputStream ->
             JsonReader(inputStream.reader()).use { jsonReader ->
                 val type = object : TypeToken<List<Operation>>() {}.type

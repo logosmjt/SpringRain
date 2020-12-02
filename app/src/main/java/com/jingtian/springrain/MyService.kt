@@ -7,7 +7,7 @@ import android.os.IBinder
 class MyService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
-        return iBinder;
+        return iBinder
     }
     private val iBinder = object : IMyAidlInterface.Stub() {
         override fun basicTypes(
@@ -18,12 +18,11 @@ class MyService : Service() {
             aDouble: Double,
             aString: String?
         ) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
         }
 
         override fun getName(): String {
             return getString(R.string.aidl_service_name)
         }
-
     }
 }

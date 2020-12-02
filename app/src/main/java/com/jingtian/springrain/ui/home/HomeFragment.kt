@@ -18,7 +18,6 @@ import com.jingtian.springrain.databinding.FragmentHomeBinding
 import com.jingtian.springrain.helper.provideHomeViewModelFactory
 import com.jingtian.springrain.helper.setupRefreshLayout
 
-
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels {
         provideHomeViewModelFactory(this)
@@ -40,10 +39,8 @@ class HomeFragment : Fragment() {
     private var mIntent: Intent? = null
     private var myAidlInterface: IMyAidlInterface? = null
 
-
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
-
         }
 
         override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
@@ -57,7 +54,6 @@ class HomeFragment : Fragment() {
         setupListAdapter()
         setupRefreshLayout(viewDataBinding.refreshLayout, viewDataBinding.operations)
         setupFab()
-
 
         mIntent = Intent()
         mIntent?.component =
@@ -76,7 +72,6 @@ class HomeFragment : Fragment() {
     private fun setupFab() {
         activity?.findViewById<FloatingActionButton>(R.id.add_task_fab)?.let {
             it.setOnClickListener {
-
             }
         }
     }

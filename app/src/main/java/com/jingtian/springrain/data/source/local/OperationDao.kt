@@ -1,7 +1,7 @@
 package com.jingtian.springrain.data.source.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.*// ktlint-disable
 import com.jingtian.springrain.data.Operation
 
 @Dao
@@ -22,7 +22,7 @@ interface OperationDao {
     suspend fun deleteOperations()
 
     @Transaction
-    suspend fun replaceOperations(operations: List<Operation>){
+    suspend fun replaceOperations(operations: List<Operation>) {
         deleteOperations()
         insertAll(operations)
     }

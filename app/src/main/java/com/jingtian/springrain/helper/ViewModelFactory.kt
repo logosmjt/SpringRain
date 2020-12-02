@@ -31,16 +31,19 @@ class HomeViewModelFactory(
 
 private fun getOperationLocalDataSource(context: Context): OperationLocalDataSource {
     return OperationLocalDataSource.getInstance(
-        AppDatabase.getInstance(context.applicationContext).operationDao())
+        AppDatabase.getInstance(context.applicationContext).operationDao()
+    )
 }
 
 private fun getOperationRemoteDataSource(context: Context): OperationRemoteDataSource {
     return OperationRemoteDataSource.getInstance(context.applicationContext)
 }
 
-private fun getOperationRepository(context: Context):OperationRepository {
-    return OperationRepository.getInstance(getOperationLocalDataSource(context),
-        getOperationRemoteDataSource(context))
+private fun getOperationRepository(context: Context): OperationRepository {
+    return OperationRepository.getInstance(
+        getOperationLocalDataSource(context),
+        getOperationRemoteDataSource(context)
+    )
 }
 
 fun provideHomeViewModelFactory(fragment: Fragment): HomeViewModelFactory {

@@ -18,7 +18,6 @@ import com.jingtian.springrain.MainActivity
 import com.jingtian.springrain.R
 import com.jingtian.springrain.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.activity_splash.*
-import org.jetbrains.annotations.NotNull
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var mIntent: Intent
@@ -27,7 +26,6 @@ class SplashActivity : AppCompatActivity() {
 
     private val connection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
-
         }
 
         override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
@@ -37,7 +35,8 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView<FragmentHomeBinding>(this,
+        setContentView<FragmentHomeBinding>(
+            this,
             R.layout.activity_splash
         )
 
@@ -48,16 +47,16 @@ class SplashActivity : AppCompatActivity() {
 
         mManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        aidlBtn.setOnClickListener{
+        aidlBtn.setOnClickListener {
             tv_aidl.text = myAidlInterface.name
         }
 
-        notificationBtn.setOnClickListener{
+        notificationBtn.setOnClickListener {
             val NOTIFICATION_ID = 234
             mManager.notify(NOTIFICATION_ID, buildNotification())
         }
 
-        nextBtn.setOnClickListener{
+        nextBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -66,7 +65,7 @@ class SplashActivity : AppCompatActivity() {
     fun buildNotification(): Notification? {
         val CHANNEL_ID = "1"
         val manager = getSystemService(Context.NOTIFICATION_SERVICE)
-                as NotificationManager
+            as NotificationManager
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channelName = "channel_name"
             val channel =
@@ -85,18 +84,20 @@ class SplashActivity : AppCompatActivity() {
 
         var builder =
             NotificationCompat.Builder(this, CHANNEL_ID)
-                //小图标
+                // 小图标
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                //标题
+                // 标题
                 .setContentTitle("标题")
-                //正文
+                // 正文
                 .setContentText("正文...")
                 .setContentIntent(pendingIntent)
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .bigText("正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文" +
+                        .bigText(
+                            "正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文" +
                                 "正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文" +
-                                "正文正文正文...")
+                                "正文正文正文..."
+                        )
                 )
 
         return builder.build()

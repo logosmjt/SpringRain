@@ -2,12 +2,11 @@ package com.jingtian.springrain
 
 import android.content.Context
 import org.hamcrest.CoreMatchers.`is`
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -28,7 +27,7 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun appName_isCorrect(){
+    fun appName_isCorrect() {
         `when`(mockContext.getString(R.string.app_name)).thenReturn(APP_NAME_STRING)
         val result: String = mockContext.getString(R.string.app_name)
         assertThat(result, `is`(APP_NAME_STRING))

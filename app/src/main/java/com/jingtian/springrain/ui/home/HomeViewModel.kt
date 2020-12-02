@@ -1,14 +1,14 @@
 package com.jingtian.springrain.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.*// ktlint-disable
 import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.data.source.OperationRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel (
+class HomeViewModel(
     private val operationRepository: OperationRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val _forceUpdate = MutableLiveData<Boolean>(false)
     private val _dataLoading = MutableLiveData<Boolean>()
@@ -34,7 +34,7 @@ class HomeViewModel (
         _forceUpdate.value = forceUpdate
     }
 
-    fun insert(operation: Operation){
+    fun insert(operation: Operation) {
         viewModelScope.launch {
             operationRepository.insert(operation)
         }
@@ -42,4 +42,3 @@ class HomeViewModel (
     val dataLoading: LiveData<Boolean> = _dataLoading
     val items: LiveData<List<Operation>> = _items
 }
-

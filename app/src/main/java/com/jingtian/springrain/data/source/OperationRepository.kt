@@ -3,12 +3,12 @@ package com.jingtian.springrain.data.source
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.jingtian.springrain.data.Operation
+import com.jingtian.springrain.data.Result.Error
+import com.jingtian.springrain.data.Result.Success
 import com.jingtian.springrain.data.source.local.OperationLocalDataSource
 import com.jingtian.springrain.data.source.remote.OperationRemoteDataSource
-import com.jingtian.springrain.data.Result.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class OperationRepository(
@@ -21,7 +21,7 @@ class OperationRepository(
         if (result is Success) {
             operationLocalDataSource.replaceOperations(result.data)
         } else if (result is Error) {
-            Log.i("OperationRepository","result.exception:${result.exception}")
+            Log.i("OperationRepository", "result.exception:${result.exception}")
         }
     }
 
@@ -30,13 +30,13 @@ class OperationRepository(
     }
 
     suspend fun getOperations() {
-        withContext(ioDispatcher){
+        withContext(ioDispatcher) {
             operationLocalDataSource.getOperations()
         }
     }
 
     suspend fun insert(operation: Operation) {
-        withContext(ioDispatcher){
+        withContext(ioDispatcher) {
             operationLocalDataSource.insert(operation)
         }
     }
@@ -44,12 +44,14 @@ class OperationRepository(
     companion object {
         @Volatile
         private var instance: OperationRepository? = null
-        fun getInstance(localDataSource: OperationLocalDataSource, remoteDataSource
-            : OperationRemoteDataSource) =
+        fun getInstance(
+            localDataSource: OperationLocalDataSource,
+            remoteDataSource:
+                OperationRemoteDataSource
+        ) =
             instance ?: synchronized(this) {
                 instance ?: OperationRepository(localDataSource, remoteDataSource)
                     .also { instance = it }
             }
     }
 }
-

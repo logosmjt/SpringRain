@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+apply plugin: 'checkstyle'
 
 repositories {
     jcenter()
@@ -27,6 +28,14 @@ dependencies {
     // additional 3rd party ruleset(s) can be specified here
     // just add them to the classpath (ktlint 'groupId:artifactId:version') and
     // ktlint will pick them up
+}
+
+task installGitHooks(type: Copy) {
+    from new File(rootProject.rootDir, 'check/pre-commit')
+    into {
+        new File(rootProject.rootDir, '.git/hooks')
+    }
+    fileMode 0755
 }
 
 def getChangeFiles() {
@@ -90,10 +99,4 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     args "-F", "src/**/*.kt"
 }
 
-task installGitHooks(type: Copy) {
-    from new File(rootProject.rootDir, 'check/pre-commit')
-    into {
-        new File(rootProject.rootDir, '.git/hooks')
-    }
-    fileMode 0755
-}
+preBuild.dependsOn installGitHooks

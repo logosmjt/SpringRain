@@ -12,19 +12,18 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 
-
-@RunWith(RobolectricTestRunner::class )
+@RunWith(RobolectricTestRunner::class)
 class SplashActivityRobolectricTest {
     lateinit var splashActivity: SplashActivity
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockitoAnnotations.initMocks(this)
         splashActivity = Robolectric.buildActivity(SplashActivity::class.java).create().get()
     }
 
     @Test
-    fun testNextBtn_click_ShouldStartMainActivity(){
+    fun testNextBtn_click_ShouldStartMainActivity() {
         splashActivity.findViewById<Button>(R.id.nextBtn).performClick()
         val intent = Intent(splashActivity, MainActivity::class.java)
         Assert.assertEquals(
@@ -32,6 +31,4 @@ class SplashActivityRobolectricTest {
             Shadows.shadowOf(splashActivity).nextStartedActivity.component
         )
     }
-
-
 }

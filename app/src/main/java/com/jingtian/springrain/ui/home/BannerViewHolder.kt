@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.databinding.ListItemBannerBinding
 
-class BannerViewHolder(private val binding: ListItemBannerBinding)
-    : RecyclerView.ViewHolder(binding.root){
+class BannerViewHolder(private val binding: ListItemBannerBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     init {
         binding.setClickListener {
             binding.banner?.let { banner ->
@@ -20,5 +20,4 @@ class BannerViewHolder(private val binding: ListItemBannerBinding)
             executePendingBindings()
         }
     }
-
 }

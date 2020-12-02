@@ -119,3 +119,5 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiAutomatorVersion"
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 }
+
+apply from: 'klint.gradle'

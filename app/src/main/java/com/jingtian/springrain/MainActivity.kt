@@ -19,9 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.GreenTheme)
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
-        val viewPager2: ViewPager2 = findViewById(R.id.viewPager2)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        supportActionBar
+            ?.hide()
+        val viewPager2:      ViewPager2 = findViewById(R.id.viewPager2)
+        val navView     : BottomNavigationView = findViewById(R.id.nav_view)
 
         viewPager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {

@@ -22,8 +22,5 @@ class MainActivityTest {
     fun testHomeFrag_clickRecyclerView(){
         val position = 1
         onView(withId(R.id.navigation_home)).perform(click())
-
-        onView(withId(R.id.operations)).perform(
-            actionOnItemAtPosition<OperationAdapter.BannerViewHolder>(position,click()));
     }
 }

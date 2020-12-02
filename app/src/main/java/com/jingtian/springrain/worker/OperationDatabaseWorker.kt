@@ -18,6 +18,7 @@ class OperationDatabaseWorker (
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope {
         try {
+            Log.i("JT","doWork")
             applicationContext.assets.open(OPERATION_DATA_FILENAME).use { inputStream ->
                 JsonReader(inputStream.reader()).use { jsonReader ->
                     val type = object : TypeToken<List<Operation>>() {}.type

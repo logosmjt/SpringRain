@@ -2,6 +2,7 @@ package com.jingtian.springrain.ui.home
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jingtian.springrain.data.Operation
 import com.jingtian.springrain.databinding.ListItemBannerBinding
 import com.jingtian.springrain.helper.BANNER
+import com.jingtian.springrain.helper.GRID
 
 class OperationAdapter(private val viewModel: HomeViewModel)
     : ListAdapter<Operation, RecyclerView.ViewHolder>(OperationDiffCallback()) {
@@ -32,24 +34,6 @@ class OperationAdapter(private val viewModel: HomeViewModel)
     }
 
 
-
-    class BannerViewHolder(private val binding: ListItemBannerBinding)
-        : RecyclerView.ViewHolder(binding.root){
-        init {
-            binding.setClickListener {
-                binding.banner?.let { banner ->
-                    Log.i("OperationAdapter", "banner url :${banner.imageUrls}")
-                }
-            }
-        }
-        fun bind(item: Operation) {
-            binding.apply {
-                banner = item
-                executePendingBindings()
-            }
-        }
-
-    }
 }
 
 private class OperationDiffCallback : DiffUtil.ItemCallback<Operation>() {

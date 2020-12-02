@@ -1,0 +1,99 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    ktlint
+}
+
+dependencies {
+    ktlint "com.pinterest:ktlint:0.39.0"
+    // additional 3rd party ruleset(s) can be specified here
+    // just add them to the classpath (ktlint 'groupId:artifactId:version') and
+    // ktlint will pick them up
+}
+
+def getChangeFiles() {
+    try {
+        String changeInfo = 'git status -s'.execute(null, project.rootDir).text.trim()
+        println("changeInfo:${changeInfo}")
+        return changeInfo == null ? "" : changeInfo
+    } catch (Exception e) {
+        println e.printStackTrace()
+        return ""
+    }
+}
+
+static def filterCommitter(String gitstatusinfo, String extension) {
+    ArrayList<String> filterList = new ArrayList<String>()
+    String[] lines = gitstatusinfo.split("\\n")
+    for (String line : lines) {
+        if (line.contains(extension)) {
+            String[] spliters = line.trim().split(" ")
+            for (String str : spliters) {
+                if (str.contains(extension)) {
+                    filterList.add(str)
+                }
+            }
+        }
+    }
+    return filterList
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    def ft = filterCommitter(getChangeFiles(), ".kt")
+    def argsList = new ArrayList<String>()
+    for (int i = 0; i < ft.size(); i++) {
+        String spliter = ft[i]
+        String[] spliterlist = spliter.split("/")
+        String fileName = spliterlist[spliterlist.length - 1]
+
+        argsList.add("src/**/" + fileName)
+    }
+
+    // Only check the modified kt files.
+    if (argsList.size() == 0) {
+        argsList.add("!src/**/*.kt")
+    }
+
+    // Report file rule.
+    argsList.add("--reporter=plain")
+    argsList.add("--reporter=html,output=${buildDir}/reports/ktlint/ktlint.html")
+
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args argsList as String[]
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    main = "com.pinterest.ktlint.Main"
+    classpath = configurations.ktlint
+    args "-F", "src/**/*.kt"
+}
+
+task installGitHooks(type: Copy) {
+    from new File(rootProject.rootDir, 'check/pre-commit')
+    into {
+        new File(rootProject.rootDir, '.git/hooks')
+    }
+    fileMode 0755
+}

@@ -18,12 +18,20 @@ fi
 # Redirect output to stderr.
 exec 1>&2
 
-# Run ktlint before commit.
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_ABS_PATH=`cd "$SCRIPT_DIR"; pwd`
+#Run test
+$SCRIPT_ABS_PATH/../../gradlew  -PcheckCommit="true" test
+if [ $? -eq 0   ]; then
+    echo "test pass"
+else
+    exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
+fi
+
+# Run ktlint before commit.
 $SCRIPT_ABS_PATH/../../gradlew  -PcheckCommit="true" ktlint
 if [ $? -eq 0   ]; then
-    echo "ktlint OK"
+    echo "ktlint pass"
 else
     exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
 fi

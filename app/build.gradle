@@ -114,4 +114,16 @@ dependencies {
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 }
 
+task getStatus(type: Exec) {
+    try {
+        println("do getStatus")
+        def changeInfo = ['sh', '-c', 'git status -s " "'].execute().text.trim()
+        println("changeInfo:${changeInfo}")
+        return changeInfo == null ? "" : changeInfo
+    } catch (Exception e) {
+        println e.printStackTrace()
+        return ""
+    }
+}
+
 apply from: '../klint.gradle'

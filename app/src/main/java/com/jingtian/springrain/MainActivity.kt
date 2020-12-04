@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.GreenTheme)
         setContentView(R.layout.activity_main)
+
         supportActionBar
             ?.hide()
 

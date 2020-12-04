@@ -5,7 +5,7 @@
 # exit with non-zero status after issuing an appropriate message if
 # it wants to stop the commit.
 #
-# To enable this hook, rename this file to "pre-push".
+# To enable this hook, rename this file to "pre-commit".
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
@@ -18,13 +18,10 @@ fi
 # Redirect output to stderr.
 exec 1>&2
 
-SCRIPT_DIR=$(dirname "$0")
-SCRIPT_ABS_PATH=`cd "$SCRIPT_DIR"; pwd`
-
 # Run ktlint before commit.
-$SCRIPT_ABS_PATH/../../gradlew  -PcheckCommit="true" ktlint
+$./gradlew  -PcheckCommit="true" ktlint
 if [ $? -eq 0   ]; then
-    echo "ktlint pass"
+    echo "ktlint OK"
 else
     exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
 fi

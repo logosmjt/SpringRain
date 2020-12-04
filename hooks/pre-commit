@@ -20,8 +20,11 @@ exec 1>&2
 
 # Run ktlint before commit.
 $./gradlew  -PcheckCommit="true" ktlint
-if [ $? -eq 0   ]; then
-    echo "ktlint OK"
-else
-    exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
+
+CMD="./gradlew ktlint"
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+ echo "failed $CMD"
+ exit 1
 fi
+exit 0

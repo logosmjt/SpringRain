@@ -11,7 +11,7 @@ dependencies {
 }
 
 task installGitHooks(type: Copy) {
-    from new File(rootProject.rootDir, 'hooks/pre-push')
+    from new File(rootProject.rootDir, 'hooks')
     into {
         new File(rootProject.rootDir, '.git/hooks')
     }

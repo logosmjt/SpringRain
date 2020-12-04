@@ -114,4 +114,4 @@ dependencies {
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 }
 
-apply from: 'klint.gradle'
+apply from: '../klint.gradle'

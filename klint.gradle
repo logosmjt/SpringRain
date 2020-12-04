@@ -96,4 +96,9 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     args argsList as String[]
 }
 
+task getStatus(type: Exec) {
+    String changeInfo = "git status -s".execute().text.trim()
+    println("git status:${changeInfo}")
+}
+
 preBuild.dependsOn installGitHooks

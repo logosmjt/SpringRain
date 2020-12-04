@@ -7,17 +7,6 @@
 #
 # To enable this hook, rename this file to "pre-push".
 
-if git rev-parse --verify HEAD >/dev/null 2>&1
-then
-    against=HEAD
-else
-    # Initial commit: diff against an empty tree object
-    against=$(git hash-object -t tree /dev/null)
-fi
-
-# Redirect output to stderr.
-exec 1>&2
-
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_ABS_PATH=`cd "$SCRIPT_DIR"; pwd`
 #Run test

@@ -20,7 +20,7 @@ task installGitHooks(type: Copy) {
 
 def getChangeFiles() {
     try {
-        String changeInfo = 'git status -s'.execute(null, project.rootDir).text.trim()
+        String changeInfo = "git status -s".execute().text.trim()
         println("changeInfo:${changeInfo}")
         return changeInfo == null ? "" : changeInfo
     } catch (Exception e) {

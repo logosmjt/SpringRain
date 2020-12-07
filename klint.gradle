@@ -1,104 +1,96 @@
-apply plugin: 'checkstyle'
-
 repositories {
-    jcenter()
+  jcenter()
 }
 
 configurations {
-    ktlint
-}
-
-
-checkstyle {
-    toolVersion = '8.29'
+  ktlint
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.39.0"
+  ktlint "com.pinterest:ktlint:0.39.0"
 }
 
 task installGitHooks(type: Copy) {
-    from new File(rootProject.rootDir, 'hooks')
-    into {
-        new File(rootProject.rootDir, '.git/hooks')
-    }
-    fileMode 0755
+  from new File(rootProject.rootDir, 'hooks')
+  into {
+    new File(rootProject.rootDir, '.git/hooks')
+  }
+  fileMode 0755
 }
 
-def getChangeFiles() {
-    try {
-        String changeInfo = "git status -s".execute().text.trim()
-        return changeInfo == null ? "" : changeInfo
-    } catch (Exception e) {
-        println e.printStackTrace()
-        return ""
-    }
+def getChangedFiles() {
+  try {
+    String changeInfo = "git status -s".execute().text.trim()
+    println("changeInfo:${changeInfo}")
+    return changeInfo == null ? "" : changeInfo
+  } catch (Exception e) {
+    println e.printStackTrace()
+    return ""
+  }
 }
 
-static def filterCommitter(String gitstatusinfo, String extension) {
-    ArrayList<String> filterList = new ArrayList<String>()
-    String[] lines = gitstatusinfo.split("\\n")
-    for (String line : lines) {
-        if (line.contains(extension)) {
-            String[] spliters = line.trim().split(" ")
-            for (String str : spliters) {
-                if (str.contains(extension)) {
-                    filterList.add(str)
-                }
-            }
+static def filterByExtension(String status, String extension) {
+  ArrayList<String> list = new ArrayList<String>()
+  String[] lines = status.split("\\n")
+  for (String line : lines) {
+    if (line.contains(extension)) {
+      String[] items = line.trim().split(" ")
+      for (String str : items) {
+        if (str.contains(extension)) {
+          list.add(str)
         }
+      }
     }
-    return filterList
+  }
+  return list
 }
 
 task ktlint(type: JavaExec, group: "verification") {
-    def ft = filterCommitter(getChangeFiles(), ".kt")
-    def argsList = new ArrayList<String>()
-    for (int i = 0; i < ft.size(); i++) {
-        String spliter = ft[i]
-        String[] spliterlist = spliter.split("/")
-        String fileName = spliterlist[spliterlist.length - 1]
+  def list = filterByExtension(getChangedFiles(), ".kt")
+  def argsList = new ArrayList<String>()
+  for (int i = 0; i < list.size(); i++) {
+    String item = list[i]
+    String[] items = item.split("/")
+    String fileName = items[items.length - 1]
 
-        argsList.add("src/**/" + fileName)
-    }
+    argsList.add("src/**/" + fileName)
+  }
 
-    if (argsList.size() == 0) {
-        argsList.add("!src/**/*.kt")
-    }
+  if (argsList.size() == 0) {
+    argsList.add("!src/**/*.kt")
+  }
 
-    // Report file rule.
-    argsList.add("--reporter=plain")
-    argsList.add("--reporter=html,output=${buildDir}/reports/ktlint/ktlint.html")
+  // Report file rule.
+  argsList.add("--reporter=plain")
+  argsList.add("--reporter=html,output=${buildDir}/reports/ktlint/ktlint.html")
 
-    description = "Check Kotlin code style."
-    classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args argsList as String[]
+  description = "Check Kotlin code style."
+  classpath = configurations.ktlint
+  main = "com.pinterest.ktlint.Main"
+  args argsList as String[]
 }
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
-    def ft = filterCommitter(getChangeFiles(), ".kt")
-    def argsList = new ArrayList<String>()
-    argsList.add("-F")
-    for (int i = 0; i < ft.size(); i++) {
-        String spliter = ft[i]
-        String[] spliterlist = spliter.split("/")
-        String fileName = spliterlist[spliterlist.length - 1]
+  def list = filterByExtension(getChangedFiles(), ".kt")
+  def argsList = new ArrayList<String>()
+  argsList.add("-F")
+  for (int i = 0; i < list.size(); i++) {
+    String item = list[i]
+    String[] items = item.split("/")
+    String fileName = items[items.length - 1]
 
-        argsList.add("src/**/" + fileName)
-    }
+    argsList.add("src/**/" + fileName)
+  }
 
-    if (argsList.size() == 0) {
-        argsList.add("!src/**/*.kt")
-    }
-    println("argsList:${argsList}")
+  if (argsList.size() == 0) {
+    argsList.add("!src/**/*.kt")
+  }
+  println("argsList:${argsList}")
 
-    description = "Fix Kotlin code style deviations."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.ktlint
-    args argsList as String[]
+  description = "Fix Kotlin code style deviations."
+  main = "com.pinterest.ktlint.Main"
+  classpath = configurations.ktlint
+  args argsList as String[]
 }
-
-
 
 preBuild.dependsOn installGitHooks

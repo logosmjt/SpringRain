@@ -1,14 +1,10 @@
 #!/bin/sh
 
 CMD="./gradlew ktlint"
-# Check if we actually have commits to push
-commits=`git log @{u}..`
-if [ -z "$commits" ]; then
- exit 0
-fi
 $CMD
-if [ $? -eq 0   ]; then
-    echo "ktlint OK"
+RESULT=$?
+if [ $RESULT -eq 0 ]; then
+    echo "ktlint success"
 else
     exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
 fi

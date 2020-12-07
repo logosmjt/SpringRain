@@ -46,10 +46,10 @@ static def filterByExtension(String status, String extension) {
 }
 
 task ktlint(type: JavaExec, group: "verification") {
-  def list = filterByExtension(getChangedFiles(), ".kt")
+  def files = filterByExtension(getChangedFiles(), ".kt")
   def argsList = new ArrayList<String>()
-  for (int i = 0; i < list.size(); i++) {
-    String item = list[i]
+  for (int i = 0; i < files.size(); i++) {
+    String item = files[i]
     String[] items = item.split("/")
     String fileName = items[items.length - 1]
 

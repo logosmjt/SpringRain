@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.GreenTheme)
         setContentView(R.layout.activity_main)
 
-        supportActionBar
-            ?.hide()
+        supportActionBar?.hide()
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val viewPager2: ViewPager2 = findViewById(R.id.viewPager2)

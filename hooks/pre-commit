@@ -3,8 +3,8 @@
 CMD="./gradlew ktlint"
 $CMD
 RESULT=$?
-if [ $RESULT -eq 0 ]; then
-    echo "ktlint success"
-else
-    exit [[ $ERROR_INFO =~ "ktlint" ]] && exit 1
+if [ $RESULT -ne 0 ]; then
+ echo "failed $CMD"
+ exit 1
 fi
+exit 0

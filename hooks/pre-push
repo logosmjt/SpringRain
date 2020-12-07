@@ -2,8 +2,8 @@
 CMD="./gradlew test"
 $CMD
 RESULT=$?
-if [ $RESULT -eq 0 ]; then
-    echo "test success"
-else
-    exit [[ $ERROR_INFO =~ "test" ]] && exit 1
+if [ $RESULT -ne 0 ]; then
+ echo "failed $CMD"
+ exit 1
 fi
+exit 0

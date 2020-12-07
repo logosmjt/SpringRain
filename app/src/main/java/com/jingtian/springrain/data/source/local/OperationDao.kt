@@ -1,7 +1,7 @@
 package com.jingtian.springrain.data.source.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.*// ktlint-disable
+import androidx.room.*
 import com.jingtian.springrain.data.Operation
 
 @Dao

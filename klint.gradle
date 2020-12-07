@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-  ktlint "com.pinterest:ktlint:0.39.0"
+  ktlint "com.pinterest:ktlint:0.36.0"
 }
 
 task installGitHooks(type: Copy) {
@@ -20,7 +20,7 @@ task installGitHooks(type: Copy) {
 
 def getChangedFiles() {
   try {
-    String changeInfo = "git status -s".execute().text.trim()
+    String changeInfo = 'git status -s'.execute(null, project.rootDir).text.trim()
     println("changeInfo:${changeInfo}")
     return changeInfo == null ? "" : changeInfo
   } catch (Exception e) {

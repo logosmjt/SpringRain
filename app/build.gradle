@@ -117,8 +117,7 @@ dependencies {
 task getStatus(type: Exec) {
     try {
         println("do getStatus")
-        def changeInfo = ['sh', '-c', 'git status -s " "'].execute().text.trim()
-        println("changeInfo:${changeInfo}")
+        String changeInfo = 'git status -s'.execute(null, project.rootDir).text.trim()
         return changeInfo == null ? "" : changeInfo
     } catch (Exception e) {
         println e.printStackTrace()
